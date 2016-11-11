@@ -2,6 +2,7 @@ package org;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -22,13 +23,17 @@ public class AggregateByKey {
 	     
 	     public static void aggregateByKey() {
 		JavaSparkContext sc = new JavaSparkContext("local", "JavaAPISuite");
+		  List l=Arrays.asList(
+		           new Tuple2<>(1, 2),
+		           new Tuple2<>(1, 1),
+		           new Tuple2<>(3, 2),
+		           new Tuple2<>(5, 1),
+		           new Tuple2<>(5, 3),
+		           new Tuple2<>(1, 1)
+		           
+				  );
 	       JavaPairRDD<Integer, Integer> pairs = sc.parallelizePairs(
-	         Arrays.asList(
-	           new Tuple2<>(1, 1),
-	           new Tuple2<>(1, 1),
-	           new Tuple2<>(3, 2),
-	           new Tuple2<>(5, 1),
-	           new Tuple2<>(5, 3)), 2);
+	       l, 1000);
 	   
 	       Map<Integer, Set<Integer>> sets = pairs.aggregateByKey(new HashSet<Integer>(),
 	         new Function2<Set<Integer>, Integer, Set<Integer>>() {

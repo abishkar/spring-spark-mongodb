@@ -37,6 +37,12 @@ import com.mongodb.hadoop.MongoInputFormat;
 	}
 	
 	 
+	documents.saveAsTextFile("/Users/neparica/Desktop/datarepo");
+	
+	Rdd d=new Rdd();
+	d.main(null);
+	
+	
 	
 	
 	
