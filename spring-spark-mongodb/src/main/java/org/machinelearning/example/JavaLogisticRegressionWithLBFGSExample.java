@@ -1,11 +1,10 @@
 package org.machinelearning.example;
 
+import java.util.Iterator;
+import java.util.List;
+
 import org.apache.spark.SparkConf;
 import org.apache.spark.SparkContext;
-
-// $example on$
-import scala.Tuple2;
-
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.function.Function;
 import org.apache.spark.mllib.classification.LogisticRegressionModel;
@@ -13,6 +12,9 @@ import org.apache.spark.mllib.classification.LogisticRegressionWithLBFGS;
 import org.apache.spark.mllib.evaluation.MulticlassMetrics;
 import org.apache.spark.mllib.regression.LabeledPoint;
 import org.apache.spark.mllib.util.MLUtils;
+
+// $example on$
+import scala.Tuple2;
 public class JavaLogisticRegressionWithLBFGSExample {
   public static void main(String[] args) {
 	  
@@ -21,12 +23,30 @@ public class JavaLogisticRegressionWithLBFGSExample {
     SparkContext sc = new SparkContext(conf);
     // $example on$
     String path = "/Users/neparica/Downloads/spark-2.0.1-bin-hadoop2.7 2/data/mllib/sample_libsvm_data.txt";
+    
+  
     JavaRDD<LabeledPoint> data = MLUtils.loadLibSVMFile(sc, path).toJavaRDD();
 
     // Split initial RDD into two... [60% training data, 40% testing data].
     JavaRDD<LabeledPoint>[] splits = data.randomSplit(new double[] {0.6, 0.4}, 11L);
     JavaRDD<LabeledPoint> training = splits[0].cache();
     JavaRDD<LabeledPoint> test = splits[1];
+//    List<LabeledPoint> v=test.collect();
+// Iterator v1=   v.iterator();
+//    while(v1.hasNext()){
+//    
+//    	LabeledPoint l=(LabeledPoint) v1.next();
+//    	
+//    	System.out.println(l.features());
+//    	System.out.println(l.label());
+//    	
+//    	
+//    	
+//    
+//    }
+    
+    
+    
 
     // Run training algorithm to build the model.
     final LogisticRegressionModel model = new LogisticRegressionWithLBFGS()
